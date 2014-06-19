@@ -1,0 +1,10 @@
+Airbus_A320
+Boeing_777
+Tu_154
+PaperPlane
+SR-71 Blackbird
+DC-3
+Messerschmitt-262
+F-117A Nighthawk
+X-15
+Concorde
