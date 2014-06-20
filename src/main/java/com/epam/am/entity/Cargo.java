@@ -1,10 +1,16 @@
 package com.epam.am.entity;
 
 public class Cargo {
+    private long id;
     private final double weight;
 
-    public Cargo(double weight) {
+    public Cargo(long id, double weight) {
+        this.id = idCheck(id);
         this.weight = checkValue(weight);
+    }
+
+    private long idCheck(long id) {
+        return id > -1 ? id : -id;
     }
 
     private double checkValue(double val) {
@@ -15,10 +21,15 @@ public class Cargo {
         return weight;
     }
 
+    public long getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Cargo{" +
-                "weight=" + weight +
+                "id=" + id +
+                ", weight=" + weight +
                 '}';
     }
 }

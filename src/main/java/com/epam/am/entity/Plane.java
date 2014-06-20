@@ -2,7 +2,7 @@ package com.epam.am.entity;
 
 import java.awt.*;
 
-public abstract class Plane implements Flyable {
+public abstract class Plane implements Flyable, Comparable<Plane>, Cloneable {
     private long id;
     private String model;
     private Point currentLocation;
@@ -34,12 +34,46 @@ public abstract class Plane implements Flyable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Plane plane = (Plane) o;
+
+        return model.equals(plane.model);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return model.hashCode();
+    }
+
+    @Override
+    public void flyTo(Point point) {
+        currentLocation = (Point) point.clone();
+    }
+
+    @Override
     public String toString() {
         return "Plane{" +
                 "id=" + id +
                 ", model='" + model + '\'' +
                 ", currentLocation=" + currentLocation +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Plane o) {
+        if (id == o.getId()) {
+            return 0;
+        }
+        return id > o.getId() ? 1 : -1;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     protected static abstract class Builder<T extends Builder> {
