@@ -2,6 +2,8 @@ package com.epam.am.entity;
 
 import com.sun.istack.internal.NotNull;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Airliner extends Plane implements Cloneable {
@@ -84,8 +86,39 @@ public class Airliner extends Plane implements Cloneable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Airliner airliner = (Airliner) o;
+
+        return seatingCapacity == airliner.seatingCapacity;
+    }
+
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + seatingCapacity;
+        return result;
+    }
+
+    public Airliner deepClone() {
+        List<Passenger> pas = new ArrayList<>();
+        for (Passenger passenger : passengers) {
+            pas.add(passenger);
+        }
+        return new Builder().id(getId())
+                .model(getModel())
+                .currentLocation(new Point(getCurrentLocation().x, getCurrentLocation().y))
+                .seatingCapacity(seatingCapacity)
+                .passengers(pas)
+                .build();
     }
 
     public static class Builder extends Plane.Builder<Builder> {
@@ -107,25 +140,6 @@ public class Airliner extends Plane implements Cloneable {
         public Airliner build() {
             return new Airliner(this);
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        Airliner airliner = (Airliner) o;
-
-        return seatingCapacity == airliner.seatingCapacity;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + seatingCapacity;
-        return result;
     }
 
     /**

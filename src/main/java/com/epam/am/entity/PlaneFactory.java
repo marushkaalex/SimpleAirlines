@@ -11,7 +11,7 @@ import static com.epam.am.entity.RandomStringGetter.getString;
 public class PlaneFactory {
 
     private static final int MIN_PASSENGERS = 10;
-    private static final int MAX_PASSENGERS = 50;
+    private static final int MAX_PASSENGERS = 200;
     private static final int POINT_BOUND = 100;
     private static final double MIN_TOTAL_CARGO_WEIGHT = 100.0;
     private static final double MAX_TOTAL_CARGO_WEIGHT = 1000.0;
@@ -50,7 +50,7 @@ public class PlaneFactory {
     }
 
     private static List<Passenger> getRandomPassengersList(int max) {
-        List<Passenger> result = new ArrayList<Passenger>();
+        List<Passenger> result = new ArrayList<>();
         int bound = rnd.nextInt(max);
         for (int i = 0; i < bound; i++) {
             result.add(PassengerFactory.createRandomPassenger(i));
@@ -59,7 +59,7 @@ public class PlaneFactory {
     }
 
     private static List<Cargo> getRandomCargoList(double maxWeight) {
-        List<Cargo> result = new ArrayList<Cargo>();
+        List<Cargo> result = new ArrayList<>();
         int bound = rnd.nextInt(MAX_CARGO_COUNT);
         for (int i = 0; i < bound; i++) {
             Cargo cargo = new Cargo(i, rndInBounds(0, MAX_ONE_CARGO_WEIGHT));

@@ -73,7 +73,6 @@ public class CargoPlane extends Plane {
         CargoPlane that = (CargoPlane) o;
 
         return Double.compare(that.maxCargoWeight, maxCargoWeight) == 0;
-
     }
 
     @Override
@@ -119,7 +118,7 @@ public class CargoPlane extends Plane {
             if (o1.getMaxCargoWeight() == o2.getMaxCargoWeight()) {
                 return 0;
             }
-            return o1.getMaxCargoWeight() == o2.getMaxCargoWeight() ? 1 : -1;
+            return o1.getMaxCargoWeight() > o2.getMaxCargoWeight() ? 1 : -1;
         }
     }
 }

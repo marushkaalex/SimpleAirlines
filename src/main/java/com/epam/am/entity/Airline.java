@@ -7,11 +7,17 @@ import java.util.List;
 public class Airline {
     private long id;
     private String name;
-    private List<Plane> planes = new ArrayList<Plane>();
+    private List<Plane> planes = new ArrayList<>();
 
     public Airline(long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Airline(long id, String name, List<Plane> planes) {
+        this.id = id;
+        this.name = name;
+        this.planes = planes;
     }
 
     /**
@@ -73,6 +79,10 @@ public class Airline {
         });
     }
 
+    public List<Plane> getPlanes() {
+        return planes;
+    }
+
     @Override
     public String toString() {
         return "Airline{" +
@@ -80,17 +90,5 @@ public class Airline {
                 ", name='" + name + '\'' +
                 ", planes=" + planes +
                 '}';
-    }
-
-    public String planesInfo() {
-        StringBuilder sb = new StringBuilder();
-        for (Plane plane : planes) {
-            if (plane.getClass() == Airliner.class) {
-                sb.append("\nAirliner " + plane.getId() + " " + plane.getModel());
-            } else if (plane.getClass() == CargoPlane.class) {
-                sb.append("\nCargoPlane " + plane.getId() + " " + plane.getModel());
-            }
-        }
-        return sb.toString();
     }
 }

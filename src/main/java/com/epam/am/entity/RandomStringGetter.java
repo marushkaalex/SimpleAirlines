@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.Random;
 
 public class RandomStringGetter {
-    public static final int MAX = 15;
+    public static final int MAX_LINE_NUMBER = 15;
     public static final String PASSENGER_NAME = "passenger_name.txt";
     public static final String PASSENGER_SURNAME = "passenger_surname.txt";
     public static final String PLANE_MODEL = "plane_model.txt";
@@ -16,7 +16,7 @@ public class RandomStringGetter {
 
     public static String getString(String fileName) {
         try {
-            return runThroughFile(fileName, RND.nextInt(MAX));
+            return runThroughFile(fileName, RND.nextInt(MAX_LINE_NUMBER));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,6 +35,6 @@ public class RandomStringGetter {
         if (result != null) {
             return result;
         }
-        return runThroughFile(fileName, RND.nextInt(MAX));
+        return runThroughFile(fileName, RND.nextInt(MAX_LINE_NUMBER));
     }
 }
