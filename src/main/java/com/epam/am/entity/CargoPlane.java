@@ -1,10 +1,13 @@
 package com.epam.am.entity;
 
 import com.sun.istack.internal.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class CargoPlane extends Plane {
+    private final static Logger LOG = LoggerFactory.getLogger(CargoPlane.class);
     private double maxCargoWeight;
     private List<Cargo> cargo;
 
@@ -39,6 +42,7 @@ public class CargoPlane extends Plane {
     public boolean addCargo(Cargo val) {
         if (getCargoWeight() < maxCargoWeight) {
             cargo.add(val);
+            LOG.info(getBriefInfo() + ": cargo " + val + " has been added");
             return true;
         }
         return false;

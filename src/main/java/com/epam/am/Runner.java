@@ -1,31 +1,41 @@
 package com.epam.am;
 
-//todo factories DONE
-//todo flyTo() DONE
-//todo clone() DONE
-//todo compare DONE
-//todo logs
-//todo sort DONE
-//todo equals DONE
-//todo deepClone() DONE
-//todo use Comparator DONE
-//todo find in range DONE
+import com.epam.am.entity.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.epam.am.entity.Airline;
-import com.epam.am.entity.AirlineLogic;
-import com.epam.am.entity.CargoPlane;
-
+import java.awt.*;
 import java.util.List;
 
 public class Runner {
-    public static void main(String[] args) throws CloneNotSupportedException {
+
+    private final static Logger LOG = LoggerFactory.getLogger(Runner.class);
+
+    public static void main(String[] args) {
         Airline a = new Airline(0, "Ololo airlines");
         a.addRandomPlanes(10);
-        System.out.println(AirlineLogic.getPlanesInfo(a));
-        List<CargoPlane> l = AirlineLogic.getCargoPlanes(a);
-        System.out.println(AirlineLogic.getPlanesInfo(l));
-        List<CargoPlane> f = AirlineLogic.findCargoPlanesByCarryingCapacity(l, 100, 800);
-        AirlineLogic.sortCargoPlanes(f);
-        System.out.println(AirlineLogic.getPlanesInfo(f));
+        AirlineLogic.sortPlanesByType(a);
+        LOG.info(AirlineLogic.getPlanesInfo(a));
+
+        a.addPlane(PlaneFactory.createRandomPlane(11));
+        a.removePlane(5);
+
+        Plane plane = a.getPlaneById(0);
+        if (plane.getClass() == Airliner.class) {
+            ((Airliner) plane).addPassenger(new Passenger(903, "Another", "Passenger"));
+        } else {
+            ((CargoPlane) plane).addCargo(new Cargo(1234, 45));
+        }
+        plane.flyTo(new Point(500, 500));
+
+        List<Airliner> airliners = AirlineLogic.getAirliners(a);
+        List<Airliner> foundAirliners = AirlineLogic.findAirlinersBySeatingCapacity(airliners, 100, 200);
+        AirlineLogic.sortAirliners(foundAirliners);
+        LOG.info(AirlineLogic.getPlanesInfo(foundAirliners));
+
+        List<CargoPlane> cargoPlanes = AirlineLogic.getCargoPlanes(a);
+        List<CargoPlane> foundCargoPlanes = AirlineLogic.findCargoPlanesByCarryingCapacity(cargoPlanes, 400, 800);
+        AirlineLogic.sortCargoPlanes(foundCargoPlanes);
+        LOG.info(AirlineLogic.getPlanesInfo(foundCargoPlanes));
     }
 }

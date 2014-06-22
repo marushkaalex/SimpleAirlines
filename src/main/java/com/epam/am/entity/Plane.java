@@ -1,8 +1,12 @@
 package com.epam.am.entity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.*;
 
 public abstract class Plane implements Flyable, Comparable<Plane>, Cloneable {
+    private final static Logger LOG = LoggerFactory.getLogger(Plane.class);
     private long id;
     private String model;
     private Point currentLocation;
@@ -33,6 +37,10 @@ public abstract class Plane implements Flyable, Comparable<Plane>, Cloneable {
         return id > -1 ? id : -id;
     }
 
+    public String getBriefInfo() {
+        return this.getClass().getSimpleName() + ", id=" + id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,7 +49,6 @@ public abstract class Plane implements Flyable, Comparable<Plane>, Cloneable {
         Plane plane = (Plane) o;
 
         return model.equals(plane.model);
-
     }
 
     @Override
@@ -51,7 +58,9 @@ public abstract class Plane implements Flyable, Comparable<Plane>, Cloneable {
 
     @Override
     public void flyTo(Point point) {
+        LOG.info(getBriefInfo() + "has flown from " + currentLocation);
         currentLocation = (Point) point.clone();
+        LOG.info("to " + currentLocation);
     }
 
     @Override
@@ -62,6 +71,7 @@ public abstract class Plane implements Flyable, Comparable<Plane>, Cloneable {
                 ", currentLocation=" + currentLocation +
                 '}';
     }
+
 
     @Override
     public int compareTo(Plane o) {

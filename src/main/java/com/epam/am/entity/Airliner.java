@@ -1,12 +1,15 @@
 package com.epam.am.entity;
 
 import com.sun.istack.internal.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Airliner extends Plane implements Cloneable {
+    private final static Logger LOG = LoggerFactory.getLogger(Airliner.class);
     private int seatingCapacity;
     private List<Passenger> passengers;
 
@@ -32,8 +35,10 @@ public class Airliner extends Plane implements Cloneable {
                 }
             }
             passengers.add(passenger);
+            LOG.info(getBriefInfo() + ": passenger " + passenger + " has been added");
             return true;
         }
+        LOG.info(getBriefInfo() + ": passenger " + passenger + " hasn't been added");
         return false;
     }
 
@@ -57,12 +62,14 @@ public class Airliner extends Plane implements Cloneable {
 
     public void removePassenger(Passenger passenger) {
         passengers.remove(passenger);
+        LOG.info(getBriefInfo() + ": passenger " + passenger + " has been removed");
     }
 
     public void removePassenger(long id) {
         for (Passenger passenger : passengers) {
             if (passenger.getId() == id) {
                 passengers.remove(passenger);
+                LOG.info(getBriefInfo() + ": passenger " + passenger + " has been removed");
                 break;
             }
         }
@@ -72,6 +79,7 @@ public class Airliner extends Plane implements Cloneable {
         for (Passenger passenger : passengers) {
             if (passenger.getLastName().equals(lastName)) {
                 passengers.remove(passenger);
+                LOG.info(getBriefInfo() + ": passenger " + passenger + " has been removed");
                 break;
             }
         }

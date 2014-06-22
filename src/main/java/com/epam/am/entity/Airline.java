@@ -1,10 +1,13 @@
 package com.epam.am.entity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Airline {
+    private final static Logger LOG = LoggerFactory.getLogger(Airline.class);
     private long id;
     private String name;
     private List<Plane> planes = new ArrayList<>();
@@ -12,12 +15,14 @@ public class Airline {
     public Airline(long id, String name) {
         this.id = id;
         this.name = name;
+        LOG.info("Airline has been created: " + this);
     }
 
     public Airline(long id, String name, List<Plane> planes) {
         this.id = id;
         this.name = name;
         this.planes = planes;
+        LOG.info("Airline has been created: " + this);
     }
 
     /**
@@ -31,23 +36,34 @@ public class Airline {
             }
         }
         planes.add(plane);
+        LOG.info(plane.getBriefInfo() + " has been added into \"" + name + "\"");
         return true;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void addRandomPlanes(int planesCount) {
         for (int i = 0; i < planesCount; i++) {
-            planes.add(PlaneFactory.createRandomPlane(i));
+            addPlane(PlaneFactory.createRandomPlane(i));
         }
     }
 
     public void removePlane(Plane plane) {
         planes.remove(plane);
+        LOG.info(plane.getBriefInfo() + " has been removed from \"" + name + "\"");
     }
 
     public void removePlane(long id) {
         for (Plane plane : planes) {
             if (plane.getId() == id) {
                 planes.remove(plane);
+                LOG.info(plane.getBriefInfo() + " has been removed from \"" + name + "\"");
                 break;
             }
         }
@@ -60,23 +76,6 @@ public class Airline {
             }
         }
         throw new IllegalArgumentException("No airplane with id = " + id);
-    }
-
-    public void sortPlanesById() {
-        Collections.sort(planes);
-    }
-
-    public void sortPlanesByType() {
-        Collections.sort(planes, (planeA, planeB) -> {
-            if (planeA.getClass() == planeB.getClass()) {
-                return 0;
-            }
-            if ((planeA.getClass() == Airliner.class) && (planeB.getClass() == CargoPlane.class)) {
-                return -1;
-            } else {
-                return 1;
-            }
-        });
     }
 
     public List<Plane> getPlanes() {
