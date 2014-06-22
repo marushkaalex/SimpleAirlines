@@ -34,8 +34,9 @@ public class Runner {
         AirlineLogic.sortCargoPlanes(foundCargoPlanes);
         LOG.info(AirlineLogic.getPlanesInfo(foundCargoPlanes));
 
-        List<Plane> filteredPlanes = (AirlineLogic.findByFilter(airline,
-                (plane1) -> plane1.getModel().equals(RandomStringGetter.getString(RandomStringGetter.PLANE_MODEL))));
+        String model = RandomStringGetter.getString(RandomStringGetter.PLANE_MODEL);
+        LOG.info("You search " + model + " model. Found:");
+        List<Plane> filteredPlanes = (AirlineLogic.findByFilter(airline, (plane1) -> plane1.getModel().equals(model)));
         LOG.info(AirlineLogic.getPlanesInfo(filteredPlanes));
     }
 }
