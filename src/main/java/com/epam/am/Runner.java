@@ -37,5 +37,8 @@ public class Runner {
         List<CargoPlane> foundCargoPlanes = AirlineLogic.findCargoPlanesByCarryingCapacity(cargoPlanes, 400, 800);
         AirlineLogic.sortCargoPlanes(foundCargoPlanes);
         LOG.info(AirlineLogic.getPlanesInfo(foundCargoPlanes));
+
+        List<Plane> p = (AirlineLogic.findByFilter(a, (i) -> i.getId() == 0));
+        LOG.info(AirlineLogic.getPlanesInfo(p));
     }
 }

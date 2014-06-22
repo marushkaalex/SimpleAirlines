@@ -143,6 +143,26 @@ public class AirlineLogic {
         return result;
     }
 
+    public static List<Plane> findByFilter(Airline a, SearchFilter filter) {
+        List<Plane> result = new ArrayList<>();
+        for (Plane plane : a.getPlanes()) {
+            if (filter.search(plane)) {
+                result.add(plane);
+            }
+        }
+        return result;
+    }
+
+    public static List<Plane> findByFilter(List<Plane> a, SearchFilter filter) {
+        List<Plane> result = new ArrayList<>();
+        for (Plane plane : a) {
+            if (filter.search(plane)) {
+                result.add(plane);
+            }
+        }
+        return result;
+    }
+
     public static String getPlanesInfo(List<? extends Plane> a) {
         StringBuilder sb = new StringBuilder();
         sb.append("Planes:");
