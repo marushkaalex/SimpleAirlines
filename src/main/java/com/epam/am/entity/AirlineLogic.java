@@ -177,4 +177,12 @@ public class AirlineLogic {
         }
         return sb.toString();
     }
+
+    public static void addRandomCargoOrPassenger(Plane plane) {
+        if (plane.getClass() == Airliner.class) {
+            ((Airliner) plane).addPassenger(new Passenger(903, "Another", "Passenger"));
+        } else {
+            ((CargoPlane) plane).addCargo(new Cargo(1234, 45));
+        }
+    }
 }

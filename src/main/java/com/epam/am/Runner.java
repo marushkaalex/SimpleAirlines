@@ -12,33 +12,30 @@ public class Runner {
     private final static Logger LOG = LoggerFactory.getLogger(Runner.class);
 
     public static void main(String[] args) {
-        Airline a = new Airline(0, "Ololo airlines");
-        a.addRandomPlanes(10);
-        AirlineLogic.sortPlanesByType(a);
-        LOG.info(AirlineLogic.getPlanesInfo(a));
+        Airline airline = new Airline(0, "Ololo airlines");
+        airline.addRandomPlanes(10);
+        AirlineLogic.sortPlanesByType(airline);
+        LOG.info(AirlineLogic.getPlanesInfo(airline));
 
-        a.addPlane(PlaneFactory.createRandomPlane(11));
-        a.removePlane(5);
+        airline.addPlane(PlaneFactory.createRandomPlane(11));
+        airline.removePlane(5);
 
-        Plane plane = a.getPlaneById(0);
-        if (plane.getClass() == Airliner.class) {
-            ((Airliner) plane).addPassenger(new Passenger(903, "Another", "Passenger"));
-        } else {
-            ((CargoPlane) plane).addCargo(new Cargo(1234, 45));
-        }
+        Plane plane = airline.getPlaneById(0);
+        AirlineLogic.addRandomCargoOrPassenger(plane);
         plane.flyTo(new Point(500, 500));
 
-        List<Airliner> airliners = AirlineLogic.getAirliners(a);
+        List<Airliner> airliners = AirlineLogic.getAirliners(airline);
         List<Airliner> foundAirliners = AirlineLogic.findAirlinersBySeatingCapacity(airliners, 100, 200);
         AirlineLogic.sortAirliners(foundAirliners);
         LOG.info(AirlineLogic.getPlanesInfo(foundAirliners));
 
-        List<CargoPlane> cargoPlanes = AirlineLogic.getCargoPlanes(a);
+        List<CargoPlane> cargoPlanes = AirlineLogic.getCargoPlanes(airline);
         List<CargoPlane> foundCargoPlanes = AirlineLogic.findCargoPlanesByCarryingCapacity(cargoPlanes, 400, 800);
         AirlineLogic.sortCargoPlanes(foundCargoPlanes);
         LOG.info(AirlineLogic.getPlanesInfo(foundCargoPlanes));
 
-        List<Plane> p = (AirlineLogic.findByFilter(a, (i) -> i.getId() == 0));
-        LOG.info(AirlineLogic.getPlanesInfo(p));
+        List<Plane> filteredPlanes = (AirlineLogic.findByFilter(airline,
+                (plane1) -> plane1.getModel().equals(RandomStringGetter.getString(RandomStringGetter.PLANE_MODEL))));
+        LOG.info(AirlineLogic.getPlanesInfo(filteredPlanes));
     }
 }

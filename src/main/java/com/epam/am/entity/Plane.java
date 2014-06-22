@@ -54,7 +54,7 @@ public abstract class Plane implements Flyable, Comparable<Plane>, Cloneable {
 
     @Override
     public void flyTo(Point point) {
-        LOG.info(getBriefInfo() + "has flown from " + currentLocation);
+        LOG.info(getBriefInfo() + " has flown from " + currentLocation);
         currentLocation = (Point) point.clone();
         LOG.info("to " + currentLocation);
     }
