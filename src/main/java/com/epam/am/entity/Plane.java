@@ -12,7 +12,7 @@ public abstract class Plane implements Flyable, Comparable<Plane>, Cloneable {
     private Point currentLocation;
 
     protected Plane(Builder builder) {
-        id = idCheck(builder.id);
+        id = builder.id;
         model = builder.model;
         currentLocation = builder.currentLocation;
     }
@@ -31,10 +31,6 @@ public abstract class Plane implements Flyable, Comparable<Plane>, Cloneable {
 
     public void setCurrentLocation(Point currentLocation) {
         this.currentLocation = currentLocation;
-    }
-
-    private long idCheck(long id) {
-        return id > -1 ? id : -id;
     }
 
     public String getBriefInfo() {
@@ -95,7 +91,7 @@ public abstract class Plane implements Flyable, Comparable<Plane>, Cloneable {
         }
 
         public T id(long val) {
-            id = val;
+            id = numberCheck(val);
             return (T) this;
         }
 
@@ -107,6 +103,27 @@ public abstract class Plane implements Flyable, Comparable<Plane>, Cloneable {
         public T currentLocation(Point val) {
             currentLocation = val;
             return (T) this;
+        }
+
+        protected int numberCheck(int n) {
+            if (n < -1) {
+                throw new IllegalArgumentException("Argument must be >= 0");
+            }
+            return n;
+        }
+
+        protected long numberCheck(long n) {
+            if (n < -1) {
+                throw new IllegalArgumentException("Argument must be >= 0");
+            }
+            return n;
+        }
+
+        protected double numberCheck(double n) {
+            if (n < 0) {
+                throw new IllegalArgumentException("Argument must be > 0");
+            }
+            return n;
         }
     }
 }

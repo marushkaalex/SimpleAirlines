@@ -1,5 +1,6 @@
 package com.epam.am.entity;
 
+import com.sun.istack.internal.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,16 +14,20 @@ public class Airline {
     private List<Plane> planes = new ArrayList<>();
 
     public Airline(long id, String name) {
-        this.id = id;
+        this.id = idCheck(id);
         this.name = name;
         LOG.info("Airline has been created: " + this);
     }
 
-    public Airline(long id, String name, List<Plane> planes) {
-        this.id = id;
+    public Airline(long id, String name, @NotNull List<Plane> planes) {
+        this.id = idCheck(id);
         this.name = name;
         this.planes = planes;
         LOG.info("Airline has been created: " + this);
+    }
+
+    private long idCheck(long id) {
+        return id > -1 ? id : -id;
     }
 
     /**

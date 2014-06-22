@@ -134,7 +134,7 @@ public class Airliner extends Plane implements Cloneable {
         private List<Passenger> passengers;
 
         public Builder seatingCapacity(int val) {
-            seatingCapacity = val;
+            seatingCapacity = numberCheck(val);
             return this;
         }
 

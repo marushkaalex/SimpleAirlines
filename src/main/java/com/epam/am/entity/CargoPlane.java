@@ -93,7 +93,7 @@ public class CargoPlane extends Plane {
         private List<Cargo> cargo;
 
         public Builder maxCargoWeight(double val) {
-            maxCargoWeight = val;
+            maxCargoWeight = numberCheck(val);
             return this;
         }
 
