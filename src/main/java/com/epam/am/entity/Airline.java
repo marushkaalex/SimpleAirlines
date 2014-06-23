@@ -16,14 +16,14 @@ public class Airline {
     public Airline(long id, String name) {
         this.id = idCheck(id);
         this.name = name;
-        LOG.info("Airline has been created: " + this);
+        LOG.info("Airline has been created: {}", this);
     }
 
     public Airline(long id, String name, @NotNull List<Plane> planes) {
         this.id = idCheck(id);
         this.name = name;
         this.planes = planes;
-        LOG.info("Airline has been created: " + this);
+        LOG.info("Airline has been created: {}", this);
     }
 
     private long idCheck(long id) {
@@ -41,7 +41,7 @@ public class Airline {
             }
         }
         planes.add(plane);
-        LOG.info(plane.getBriefInfo() + " has been added into \"" + name + "\"");
+        LOG.info(plane.getBriefInfo() + "{} has been added into \"{}\"", plane.getBriefInfo(), name);
         return true;
     }
 
@@ -61,14 +61,14 @@ public class Airline {
 
     public void removePlane(Plane plane) {
         planes.remove(plane);
-        LOG.info(plane.getBriefInfo() + " has been removed from \"" + name + "\"");
+        LOG.info(plane.getBriefInfo() + "{} has been removed from \"{}\"", plane.getBriefInfo(), name);
     }
 
     public void removePlane(long id) {
         for (Plane plane : planes) {
             if (plane.getId() == id) {
                 planes.remove(plane);
-                LOG.info(plane.getBriefInfo() + " has been removed from \"" + name + "\"");
+                LOG.info(plane.getBriefInfo() + "{} has been removed from \"{}\"", plane.getBriefInfo(), name);
                 break;
             }
         }

@@ -42,7 +42,7 @@ public class CargoPlane extends Plane {
     public boolean addCargo(Cargo val) {
         if (getCargoWeight() < maxCargoWeight) {
             cargo.add(val);
-            LOG.info(getBriefInfo() + ": cargo " + val + " has been added");
+            LOG.info("{}: cargo {} has been added", getBriefInfo(), val);
             return true;
         }
         return false;

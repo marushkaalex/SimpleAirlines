@@ -35,10 +35,10 @@ public class Airliner extends Plane implements Cloneable {
                 }
             }
             passengers.add(passenger);
-            LOG.info(getBriefInfo() + ": passenger " + passenger + " has been added");
+            LOG.info("{}: passenger {} has been added", getBriefInfo(), passenger);
             return true;
         }
-        LOG.info(getBriefInfo() + ": passenger " + passenger + " hasn't been added");
+        LOG.info("{}: passenger {} hasn't been added", getBriefInfo(), passenger);
         return false;
     }
 
@@ -62,14 +62,14 @@ public class Airliner extends Plane implements Cloneable {
 
     public void removePassenger(Passenger passenger) {
         passengers.remove(passenger);
-        LOG.info(getBriefInfo() + ": passenger " + passenger + " has been removed");
+        LOG.info("{}: passenger {} has been removed", getBriefInfo(), passenger);
     }
 
     public void removePassenger(long id) {
         for (Passenger passenger : passengers) {
             if (passenger.getId() == id) {
                 passengers.remove(passenger);
-                LOG.info(getBriefInfo() + ": passenger " + passenger + " has been removed");
+                LOG.info("{}: passenger {} has been removed", getBriefInfo(), passenger);
                 break;
             }
         }
@@ -79,7 +79,7 @@ public class Airliner extends Plane implements Cloneable {
         for (Passenger passenger : passengers) {
             if (passenger.getLastName().equals(lastName)) {
                 passengers.remove(passenger);
-                LOG.info(getBriefInfo() + ": passenger " + passenger + " has been removed");
+                LOG.info("{}: passenger {} has been removed", getBriefInfo(), passenger);
                 break;
             }
         }

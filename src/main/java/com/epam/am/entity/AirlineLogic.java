@@ -15,7 +15,7 @@ public class AirlineLogic {
 
     public static void sortPlanesById(Airline a) {
         Collections.sort(a.getPlanes());
-        LOG.info(a.getClass().getSimpleName() + ": planes have been sorted by id");
+        LOG.info("Planes have been sorted by id: {}", AirlineLogic.getPlanesInfo(a));
     }
 
     public static void sortPlanesByType(Airline a) {
@@ -29,7 +29,7 @@ public class AirlineLogic {
                 return 1;
             }
         });
-        LOG.info(a.getClass().getSimpleName() + ": planes have been sorted by type");
+        LOG.info("Planes have been sorted by type: {}", AirlineLogic.getPlanesInfo(a));
     }
 
     private static <T extends Plane> List<T> getPlanesList(List<? extends Plane> list, Class<T> clazz, SearchFilter filter) {
@@ -103,10 +103,10 @@ public class AirlineLogic {
         List<CargoPlane> result = getPlanesList(list, CargoPlane.class, plane ->
                 ((CargoPlane) plane).getMaxCargoWeight() > min
                         && ((CargoPlane) plane).getMaxCargoWeight() < max);
-        LOG.info("Request: cargo planes, carrying capacity: min=" + min + ", max=" + max);
-        LOG.info(result.size() + " cargo planes have been found:");
+        LOG.info("Request: cargo planes, carrying capacity: min={}, max={}", min, max);
+        LOG.info("{} cargo planes have been found:", result.size());
         for (CargoPlane cargoPlane : result) {
-            LOG.info(cargoPlane.getBriefInfo() + ", carrying capacity=" + cargoPlane.getMaxCargoWeight());
+            LOG.info("{}, carrying capacity={}", cargoPlane.getBriefInfo(), cargoPlane.getMaxCargoWeight());
         }
         return result;
     }
@@ -115,10 +115,10 @@ public class AirlineLogic {
         List<Airliner> result = getPlanesList(list, Airliner.class, plane ->
                 ((Airliner) plane).getSeatingCapacity() > min
                         && ((Airliner) plane).getSeatingCapacity() < max);
-        LOG.info("Request: airliners, seating capacity: min=" + min + ", max=" + max);
-        LOG.info(result.size() + " airliners have been found:");
+        LOG.info("Request: airliners, seating capacity: min={}, max={}", min, max);
+        LOG.info("{} airliners have been found:", result.size());
         for (Airliner airliner : result) {
-            LOG.info(airliner.getBriefInfo() + ", seating capacity=" + airliner.getSeatingCapacity());
+            LOG.info("{}, seating capacity={}", airliner.getBriefInfo(), airliner.getSeatingCapacity());
         }
         return result;
     }
