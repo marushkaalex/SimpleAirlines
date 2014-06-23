@@ -32,44 +32,30 @@ public class AirlineLogic {
         LOG.info(a.getClass().getSimpleName() + ": planes have been sorted by type");
     }
 
-    public static List<Plane> getCargoPlanesAsPlanes(Airline a) {
-        List<Plane> result = new ArrayList<>();
-        for (Plane plane : a.getPlanes()) {
-            if (plane.getClass() == CargoPlane.class) {
-                result.add(plane);
+    private static <T extends Plane> List<T> getPlanesList(List<? extends Plane> list, Class<T> clazz, SearchFilter filter) {
+        List<T> result = new ArrayList<>();
+        for (Plane plane : list) {
+            if (filter.search(plane)) {
+                result.add((T) plane);
             }
         }
         return result;
+    }
+
+    public static List<Plane> getCargoPlanesAsPlanes(Airline a) {
+        return getPlanesList(a.getPlanes(), Plane.class, plane -> plane.getClass() == CargoPlane.class);
     }
 
     public static List<CargoPlane> getCargoPlanes(Airline a) {
-        List<CargoPlane> result = new ArrayList<>();
-        for (Plane plane : a.getPlanes()) {
-            if (plane.getClass() == CargoPlane.class) {
-                result.add((CargoPlane) plane);
-            }
-        }
-        return result;
+        return getPlanesList(a.getPlanes(), CargoPlane.class, plane -> plane.getClass() == CargoPlane.class);
     }
 
     public static List<Plane> getAirlinersAsPlanes(Airline a) {
-        List<Plane> result = new ArrayList<>();
-        for (Plane plane : a.getPlanes()) {
-            if (plane.getClass() == Airliner.class) {
-                result.add(plane);
-            }
-        }
-        return result;
+        return getPlanesList(a.getPlanes(), Plane.class, plane -> plane.getClass() == Airliner.class);
     }
 
     public static List<Airliner> getAirliners(Airline a) {
-        List<Airliner> result = new ArrayList<>();
-        for (Plane plane : a.getPlanes()) {
-            if (plane.getClass() == Airliner.class) {
-                result.add((Airliner) plane);
-            }
-        }
-        return result;
+        return getPlanesList(a.getPlanes(), Airliner.class, plane -> plane.getClass() == Airliner.class);
     }
 
     /**
@@ -114,12 +100,9 @@ public class AirlineLogic {
     }
 
     public static List<CargoPlane> findCargoPlanesByCarryingCapacity(List<CargoPlane> list, double min, double max) {
-        List<CargoPlane> result = new ArrayList<>();
-        for (CargoPlane cargoPlane : list) {
-            if (cargoPlane.getMaxCargoWeight() > min && cargoPlane.getMaxCargoWeight() < max) {
-                result.add(cargoPlane);
-            }
-        }
+        List<CargoPlane> result = getPlanesList(list, CargoPlane.class, plane ->
+                ((CargoPlane) plane).getMaxCargoWeight() > min
+                        && ((CargoPlane) plane).getMaxCargoWeight() < max);
         LOG.info("Request: cargo planes, carrying capacity: min=" + min + ", max=" + max);
         LOG.info(result.size() + " cargo planes have been found:");
         for (CargoPlane cargoPlane : result) {
@@ -129,12 +112,9 @@ public class AirlineLogic {
     }
 
     public static List<Airliner> findAirlinersBySeatingCapacity(List<Airliner> list, int min, int max) {
-        List<Airliner> result = new ArrayList<>();
-        for (Airliner airliner : list) {
-            if (airliner.getSeatingCapacity() > min && airliner.getSeatingCapacity() < max) {
-                result.add(airliner);
-            }
-        }
+        List<Airliner> result = getPlanesList(list, Airliner.class, plane ->
+                ((Airliner) plane).getSeatingCapacity() > min
+                        && ((Airliner) plane).getSeatingCapacity() < max);
         LOG.info("Request: airliners, seating capacity: min=" + min + ", max=" + max);
         LOG.info(result.size() + " airliners have been found:");
         for (Airliner airliner : result) {
@@ -143,24 +123,12 @@ public class AirlineLogic {
         return result;
     }
 
-    public static List<Plane> findByFilter(Airline a, SearchFilter filter) {
-        List<Plane> result = new ArrayList<>();
-        for (Plane plane : a.getPlanes()) {
-            if (filter.search(plane)) {
-                result.add(plane);
-            }
-        }
-        return result;
+    public static List<Plane> findByFilter(Airline airline, SearchFilter filter) {
+        return getPlanesList(airline.getPlanes(), Plane.class, filter);
     }
 
-    public static List<Plane> findByFilter(List<Plane> a, SearchFilter filter) {
-        List<Plane> result = new ArrayList<>();
-        for (Plane plane : a) {
-            if (filter.search(plane)) {
-                result.add(plane);
-            }
-        }
-        return result;
+    public static List<Plane> findByFilter(List<Plane> list, SearchFilter filter) {
+        return getPlanesList(list, Plane.class, filter);
     }
 
     public static String getPlanesInfo(List<? extends Plane> a) {

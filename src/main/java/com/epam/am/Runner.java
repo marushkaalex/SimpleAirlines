@@ -18,7 +18,7 @@ public class Runner {
         LOG.info(AirlineLogic.getPlanesInfo(airline));
 
         airline.addPlane(PlaneFactory.createRandomPlane(11));
-        airline.removePlane(5);
+        airline.removePlane(3);
 
         Plane plane = airline.getPlaneById(0);
         AirlineLogic.addRandomCargoOrPassenger(plane);
